@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Fridgerator</string>
+    <string name="action_settings">Settings</string>
+    <string name="edit_message">Enter a message</string>
+    <string name="button_send">Send</string>
+
+    <!-- Start Activity Fragment Start -->
+    <string name="button_search">Rezept suchen</string>
+    <string name="button_random">Zufallsrezept</string>
+    <string name="button_create">Rezept anlegen</string>
+
+
+    <!-- Search Activity Fragment Search -->
+    <string name="title_search">Suche</string>
+    <string name="add_condiment">Gebe eine Zutat ein</string>
+    <string name="add">+</string>
+    <string name="title_activity_search_recipe">Fridgerator</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="recipe_text">Leberwurstbrot</string>
+    <string name="button_search_start">Go!</string>
+</resources>

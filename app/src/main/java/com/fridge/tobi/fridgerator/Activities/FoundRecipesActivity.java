@@ -31,7 +31,7 @@ public class FoundRecipesActivity extends AppCompatActivity {
             ingredName.setText(ingred);
             layout.addView(ingredName);
         }
-        setContentView(R.layout.content_found_recipes);
+        setContentView(layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }

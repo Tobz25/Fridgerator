@@ -13,14 +13,7 @@ import android.widget.TextView;
 
 import com.fridge.tobi.fridgerator.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link IngredientsAddedFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link IngredientsAddedFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class IngredientsAddedFragment extends Fragment {
 
     @Override
@@ -39,8 +32,6 @@ public class IngredientsAddedFragment extends Fragment {
         p.weight = 3;
         text.setLayoutParams(p);
         ingredientsConatainer.addView(text);
-
-
 
 
         return view;

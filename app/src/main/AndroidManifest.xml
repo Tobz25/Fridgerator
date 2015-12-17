@@ -21,6 +21,10 @@
         <activity
             android:name=".Activities.SearchRecipeActivity"
             android:label="@string/title_activity_search_recipe"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activities.FoundRecipesActivity"
+            android:label="@string/title_activity_found_recipes"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

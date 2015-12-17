@@ -15,8 +15,12 @@
     <string name="add_condiment">Gebe eine Zutat ein</string>
     <string name="add">+</string>
     <string name="title_activity_search_recipe">Fridgerator</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="recipe_text">Leberwurstbrot</string>
     <string name="button_search_start">Go!</string>
+
+
+    <!-- Found Activity content_found -->
+    <string name="title_found">Ein Gericht mit:</string>
+    <string name="title_activity_found_recipes">Fridgerator</string>
+
+
 </resources>

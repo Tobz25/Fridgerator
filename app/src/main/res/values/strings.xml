@@ -22,5 +22,18 @@
     <string name="title_found">Ein Gericht mit:</string>
     <string name="title_activity_found_recipes">Fridgerator</string>
 
+    <!-- Create Activity content_create -->
+    <string name="title_activity_create_recipe">Rezept anlegen</string>
+    <string name="add_recipeName">Name des Rezepts</string>
+    <string name="ingredients_list">Zutatenliste</string>
+
+    <string-array name="recipeType_array">
+        <item>Hauptgericht</item>
+        <item>Vorspeise</item>
+        <item>Nachspeise</item>
+        <item>Salat</item>
+        <item>Suppe</item>
+    </string-array>
+
 
 </resources>

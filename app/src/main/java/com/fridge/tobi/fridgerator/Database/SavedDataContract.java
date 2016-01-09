@@ -29,4 +29,12 @@ public class SavedDataContract {
         public static final String COLUMN_NAME_PROCEEDING = "recipeproceeding";
     }
 
+    public static abstract class IngredientsInRecipeTable implements BaseColumns {
+        public static final String TABLE_NAME = "ingredients_in_recipe";
+        public static final String COLUMN_NAME_INGREDIENTID = "ingredient_id";
+        public static final String COLUMN_NAME_RECIPEID = "recipe_id";
+        public static final String COLUMN_NAME_QUANTITY = "quantity";
+        public static final String COLUMN_NAME_UNIT = "unit";
+    }
+
 }

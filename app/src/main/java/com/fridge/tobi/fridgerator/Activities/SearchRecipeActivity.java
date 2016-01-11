@@ -36,6 +36,10 @@ public class SearchRecipeActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Start FoundRecipesActivity to display the found recipes
+     * @param view
+     */
     public void searchRecipes(View view) {
 
         Intent intent = new Intent();

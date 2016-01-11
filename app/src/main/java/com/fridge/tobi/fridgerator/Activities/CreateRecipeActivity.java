@@ -33,7 +33,9 @@ public class CreateRecipeActivity extends AppCompatActivity {
         loadSpinner();
         IngredientsListAddFragment ingredientsAddFragment = new IngredientsListAddFragment();
         ingredientsAddFragment.setArguments(getIntent().getExtras());
-
+        /**
+         * add fragment which includes the EditText and Button to add recipes to the activity
+         */
         getSupportFragmentManager().beginTransaction().add(R.id.addIngredients_container, ingredientsAddFragment).commit();
 
     }

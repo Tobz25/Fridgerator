@@ -38,6 +38,9 @@ public class CreateRecipeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Spinner is Dropdown menu representing the possible types of the recipe (starter, main, etc)
+     */
     private void loadSpinner(){
         Spinner spinner = (Spinner) findViewById(R.id.recipeTypeSpinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,

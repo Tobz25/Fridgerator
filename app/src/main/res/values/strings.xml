@@ -25,7 +25,11 @@
     <!-- Create Activity content_create -->
     <string name="title_activity_create_recipe">Rezept anlegen</string>
     <string name="add_recipeName">Name des Rezepts</string>
+    <string name="add_ingredientName">Zutat eingeben</string>
     <string name="ingredients_list">Zutatenliste</string>
+    <string name="checkBoxVegetarianText">vegetarisch</string>
+    <string name="checkBoxVeganText">vegan</string>
+
 
     <string-array name="recipeType_array">
         <item>Hauptgericht</item>

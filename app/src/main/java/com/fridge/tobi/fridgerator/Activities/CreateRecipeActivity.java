@@ -55,7 +55,7 @@ public class CreateRecipeActivity extends AppCompatActivity {
     public void IngredientsListAdd(View view){
 
         IngredientsAddedFragment ingredient = new IngredientsAddedFragment();
-        EditText ingredName = (EditText) findViewById(R.id.recipeName);
+        EditText ingredName = (EditText) findViewById(R.id.ingredientName);
         String message = ingredName.getText().toString();
         if(message.isEmpty()|| message == null)
             return;
@@ -66,7 +66,7 @@ public class CreateRecipeActivity extends AppCompatActivity {
                 args.putString("index", message);
                 ingredient.setArguments(args);
 
-                getSupportFragmentManager().beginTransaction().add(R.id.ingredientsList, ingredient).commit();
+                getSupportFragmentManager().beginTransaction().add(R.id.ingredientsListContainer, ingredient).commit();
                 ingredName.setText("");
         }
     }

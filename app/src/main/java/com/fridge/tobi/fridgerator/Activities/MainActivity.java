@@ -11,7 +11,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.fridge.tobi.fridgerator.Database.DBHelper;
 import com.fridge.tobi.fridgerator.R;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        fillDatabase();
     }
 
     @Override
@@ -58,6 +64,30 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, CreateRecipeActivity.class);
         startActivity(intent);
+    }
+
+    /**
+     * Create the internal database and fill it with data from the file in the assets folder
+     */
+    public void fillDatabase(){
+
+        DBHelper myDbHelper = new DBHelper(this);
+
+        try{
+            myDbHelper.createDataBase();
+        }
+        catch (IOException ioe) {
+            throw new Error ("Unable to create database");
+        }
+
+        try{
+            myDbHelper.openDataBase();
+        }
+        catch(SQLException sqle){
+            throw new Error ("Unable to open database");
+        }
+
+
     }
 
 

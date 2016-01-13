@@ -15,6 +15,8 @@ import java.util.List;
 /**
  * Created by Tobi on 03.01.2016.
  */
+
+/**
 public class DBTasks {
 
     private Context context;
@@ -47,3 +49,4 @@ public class DBTasks {
 
 
 }
+**/

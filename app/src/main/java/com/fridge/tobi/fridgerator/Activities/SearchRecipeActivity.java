@@ -9,10 +9,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.EditText;;
 
+import com.fridge.tobi.fridgerator.Database.DBHelper;
 import com.fridge.tobi.fridgerator.Fragments.IngredientsAddedFragment;
 import com.fridge.tobi.fridgerator.Fragments.SearchFragment;
 import com.fridge.tobi.fridgerator.R;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +36,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
         searchFragment.setArguments(getIntent().getExtras());
 
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, searchFragment).commit();
+
     }
 
 
@@ -44,7 +48,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
 
         Intent intent = new Intent();
         intent.setClass(this, FoundRecipesActivity.class);
-        intent.putStringArrayListExtra(INGRED_LIST,(ArrayList<String>) ingredientsList);
+        intent.putStringArrayListExtra(INGRED_LIST, (ArrayList<String>) ingredientsList);
         startActivity(intent);
 
     }
@@ -82,5 +86,6 @@ public class SearchRecipeActivity extends AppCompatActivity {
         ingredAlert.create().show();
 
     }
+
 
 }

@@ -18,13 +18,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.sql.SQLException;
 
 /**
  * Created by Tobi on 17.12.2015.
  */
 
-public class DBHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper implements Serializable {
 
     /**
     private static final String DATABASE_NAME ="Fridgerator.db";
@@ -233,7 +234,61 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    public Cursor loadRecipeCursor(long id){
 
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                RecipeTable._ID,
+                RecipeTable.COLUMN_NAME_NAME,
+                RecipeTable.COLUMN_NAME_RATING,
+                RecipeTable.COLUMN_NAME_AUTHORID,
+                RecipeTable.COLUMN_NAME_PROCEEDING,
+        };
+
+        String selection = RecipeTable._ID + "=?";
+        String []selectionArgs = {Long.toString(id)};
+
+        try {
+            Cursor c = myDataBase.query(
+                    RecipeTable.TABLE_NAME,  // The table to query
+                    projection,                               // The columns to return
+                    selection,                                // The columns for the WHERE clause
+                    selectionArgs,                            // The values for the WHERE clause
+                    null,                                     // don't group the rows
+                    null,                                     // don't filter by row groups
+                    null                                      // The sort order
+            );
+            return c;
+        } catch (SQLiteException e){
+            throw new Error("Could not load recipe from DB!");
+        }
+    }
+
+    public Recipe loadRecipe(long id){
+
+        Recipe returnRecipe;
+        String recipeName;
+        int recipeRating;
+        int recipeAuthor;
+        String recipeProceeding;
+
+        Cursor recipeCursor  = loadRecipeCursor(id);
+        if (recipeCursor != null){
+            if(recipeCursor.moveToFirst()) {
+                recipeName = recipeCursor.getString(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_NAME));
+                recipeRating = recipeCursor.getInt(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_RATING));
+                recipeAuthor = recipeCursor.getInt(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_AUTHORID));
+                recipeProceeding = recipeCursor.getString(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_PROCEEDING));
+
+            }
+            else return null;
+        }
+        else return null;
+
+        returnRecipe = new Recipe(recipeName, recipeRating, recipeAuthor, recipeProceeding);
+        return returnRecipe;
+    }
 
 
 

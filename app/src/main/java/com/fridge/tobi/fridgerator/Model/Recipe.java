@@ -11,7 +11,7 @@ public class Recipe {
     private int authorId;
     private String proceeding;
 
-    public long getID() {return id;}
+    public long getId() {return id;}
     public String getName(){return name;}
     public int getRating () {return rating;}
     public int getAuthorId (){return authorId;}

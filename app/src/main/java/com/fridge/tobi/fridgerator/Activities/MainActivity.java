@@ -15,11 +15,13 @@ import com.fridge.tobi.fridgerator.Database.DBHelper;
 import com.fridge.tobi.fridgerator.R;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.sql.SQLException;
 
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.fridge.tobi.fridgerator.MESSAGE";
+    DBHelper myDbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         fillDatabase();
+
     }
 
     @Override
@@ -56,7 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void startSearch (View v) {
         Intent intent = new Intent();
-        intent.setClass(this, SearchRecipeActivity.class);
+        //intent.setClass(this, SearchRecipeActivity.class);
+        intent.putExtra("dbhelperobject", myDbHelper);
         startActivity(intent);
     }
 
@@ -66,29 +70,23 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /**
-     * Create the internal database and fill it with data from the file in the assets folder
-     */
-    public void fillDatabase(){
+    public void fillDatabase() {
 
-        DBHelper myDbHelper = new DBHelper(this);
+        myDbHelper = new DBHelper(this);
 
-        try{
+        try {
             myDbHelper.createDataBase();
-        }
-        catch (IOException ioe) {
-            throw new Error ("Unable to create database");
+        } catch (IOException ioe) {
+            throw new Error("Unable to create database");
         }
 
-        try{
+        try {
             myDbHelper.openDataBase();
+        } catch (SQLException sqle) {
+            throw new Error("Unable to open database");
         }
-        catch(SQLException sqle){
-            throw new Error ("Unable to open database");
-        }
-
-
     }
+
 
 
 }

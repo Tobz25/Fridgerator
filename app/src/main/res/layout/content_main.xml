@@ -38,5 +38,21 @@
             android:layout_weight="0.10"
             android:onClick="startCreate"/>
 
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_liste"
+            android:id="@+id/buttonEinkaufsliste"
+            android:layout_weight="0.10"
+            android:onClick="startSearch"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/button_impressum"
+            android:id="@+id/button_Impressum"
+            android:layout_weight="0.10"
+            android:onClick="startSearch"/>
+
     </LinearLayout>
 </LinearLayout>

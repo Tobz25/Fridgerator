@@ -7,12 +7,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.support.annotation.Nullable;
 
 import com.fridge.tobi.fridgerator.Database.SavedDataContract.IngredientTable;
 import com.fridge.tobi.fridgerator.Database.SavedDataContract.RecipeTable;
 import com.fridge.tobi.fridgerator.Database.SavedDataContract.IngredientsInRecipeTable;
 import com.fridge.tobi.fridgerator.Model.Recipe;
 
+import java.io.Console;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -20,12 +22,15 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import android.text.TextUtils;
 
 /**
  * Created by Tobi on 17.12.2015.
  */
 
-public class DBHelper extends SQLiteOpenHelper implements Serializable {
+public class DBHelper extends SQLiteOpenHelper {
 
     /**
     private static final String DATABASE_NAME ="Fridgerator.db";
@@ -154,13 +159,15 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
         if(!f.exists()){
             f.mkdir();
         }
-
+/**
         boolean dbExit = checkDataBase();
 
         if(dbExit) {
-        }
-        else {
-
+            //System.out.print("DB existiert");
+            SQLiteDatabase.deleteDatabase(new File(DB_NAME));
+        }**/
+      //  else {
+            //System.out.print("DB existiert noch nicht");
             this.getReadableDatabase();
             try {
                 copyDataBase();
@@ -168,7 +175,7 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
             catch (IOException e) {
                 throw new Error ("Error copying database");
             }
-        }
+      //  }
     }
 
 
@@ -181,7 +188,6 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
         } catch (SQLiteException e) {
         }
-
         if(checkDB != null){
             checkDB.close();
         }
@@ -234,6 +240,7 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
 
     }
 
+    /**
     public Cursor loadRecipeCursor(long id){
 
         // Define a projection that specifies which columns from the database
@@ -265,6 +272,7 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
         }
     }
 
+
     public Recipe loadRecipe(long id){
 
         Recipe returnRecipe;
@@ -288,8 +296,149 @@ public class DBHelper extends SQLiteOpenHelper implements Serializable {
 
         returnRecipe = new Recipe(recipeName, recipeRating, recipeAuthor, recipeProceeding);
         return returnRecipe;
+    }**/
+
+    /**
+     * load the recipes with the given ingredients and vegetarian/vegan values from the DB
+     * @param ingredients
+     * @param vegetarian
+     * @param vegan
+     * @return
+     */
+    public List<Recipe> loadRecipes(List<String> ingredients, boolean vegetarian, boolean vegan){
+
+        List<Recipe> results= new ArrayList<Recipe>();
+        List<Recipe> helperList = new ArrayList<Recipe>();
+
+        Recipe returnRecipe;
+        String recipeName;
+        int recipeRating;
+        int recipeAuthor;
+        String ingred1;
+        String ingred2;
+        int vegetarianValue;
+        int veganValue;
+        boolean isVegetarian = false;
+        boolean isVegan = false;
+        String recipeProceeding;
+        // Define a projection that specifies which columns from the database
+        // you will actually use after this query.
+        String[] projection = {
+                RecipeTable._ID,
+                RecipeTable.COLUMN_NAME_NAME,
+                RecipeTable.COLUMN_NAME_RATING
+        };
+
+
+        String selection = RecipeTable.COLUMN_NAME_VEGETARIAN + "=? AND" +
+                RecipeTable.COLUMN_NAME_VEGAN + "=?";
+
+
+        String []selectionArgs = {vegetarian ? "1" : "0", vegan ? "1" : "0"};
+
+        try {
+            Cursor c = myDataBase.query(
+                    RecipeTable.TABLE_NAME,  // The table to query
+                    null,                               // The columns to return
+                    null,                                // The columns for the WHERE clause
+                    null,                            // The values for the WHERE clause
+                    null,                                     // don't group the rows
+                    null,                                     // don't filter by row groups
+                    null                                      // The sort order
+            );
+
+            if(c!=null && c.getCount()>0) {
+                if (ingredients.size()!=0) {
+                    String ingredName = ingredients.get(0);
+                    while (c.moveToNext()) {
+                        String recipeIngred1 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED1));
+                        String recipeIngred2 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED2));
+                        if (ingredName.toUpperCase().equals(recipeIngred1.toUpperCase())||
+                                ingredName.toUpperCase().equals(recipeIngred2.toUpperCase())) {
+
+
+                       // if (ingredName.toUpperCase().equals(c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED1.toUpperCase()))) ||
+                         //       ingredName.toUpperCase().equals(c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED2.toUpperCase())))) {
+
+                            recipeName = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_NAME));
+                            recipeRating = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_RATING));
+                            recipeAuthor = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_AUTHORID));
+                            recipeProceeding = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_PROCEEDING));
+                            ingred1 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED1));
+                            ingred2 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED2));
+                            vegetarianValue = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_VEGETARIAN));
+                            veganValue = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_VEGAN));
+
+                            if(vegetarianValue == 1)
+                                isVegetarian = true;
+                            if(veganValue ==1)
+                                isVegan = true;
+
+                            returnRecipe = new Recipe(recipeName, recipeRating, recipeAuthor, recipeProceeding, ingred1, ingred2, isVegetarian,isVegan);
+                            helperList.add(returnRecipe);
+
+                        }
+                    }
+                    if (ingredients.size()>1) {
+                        String ingred2Name = ingredients.get(1);
+                        for(Recipe rec : helperList)
+                        {
+                            if(ingred2Name.toUpperCase().equals(rec.getIngred1().toUpperCase())||ingred2Name.toUpperCase().equals(rec.getIngred2().toUpperCase()))
+                                results.add(rec);
+                        }
+
+                    }
+                    else{
+                        for(Recipe rec : helperList){
+                            results.add(rec);
+                        }
+                    }
+                } else {
+                    addRecipe(c, results);
+                }
+            }
+            return results;
+
+        } catch (SQLiteException e){
+            throw new Error("Could not load recipe from DB!");
+        }
     }
 
+    public void addRecipe(Cursor c, List<Recipe> recipeList) {
 
+        Recipe returnRecipe;
+        String recipeName;
+        int recipeRating;
+        int recipeAuthor;
+        String ingred1;
+        String ingred2;
+        int vegetarian;
+        int vegan;
+        boolean isVegetarian = false;
+        boolean isVegan = false;
+        String recipeProceeding;
+
+        while (c.moveToNext()) {
+            recipeName = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_NAME));
+            recipeRating = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_RATING));
+            recipeAuthor = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_AUTHORID));
+            recipeProceeding = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_PROCEEDING));
+            ingred1 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED1));
+            ingred2 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED2));
+            vegetarian = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_VEGETARIAN));
+            vegan = c.getInt(c.getColumnIndex(RecipeTable.COLUMN_NAME_VEGAN));
+
+
+            if(vegetarian == 1)
+                isVegetarian = true;
+            if(vegan ==1)
+                isVegan = true;
+
+
+
+            returnRecipe = new Recipe(recipeName, recipeRating, recipeAuthor, recipeProceeding, ingred1, ingred2, isVegetarian,isVegan);
+            recipeList.add(returnRecipe);
+        }
+    }
 
 }

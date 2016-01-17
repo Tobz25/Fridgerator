@@ -26,7 +26,11 @@ public class SavedDataContract {
         public static final String COLUMN_NAME_RATING = "reciperating";
         public static final String COLUMN_NAME_COMMENT = "recipecomment";
         public static final String COLUMN_NAME_AUTHORID = "recipeauthor";
+        public static final String COLUMN_NAME_VEGETARIAN = "vegetarian";
+        public static final String COLUMN_NAME_VEGAN = "vegan";
         public static final String COLUMN_NAME_PROCEEDING = "recipeproceeding";
+        public static final String COLUMN_NAME_INGRED1 = "ingred1";
+        public static final String COLUMN_NAME_INGRED2 = "ingred2";
     }
 
     public static abstract class IngredientsInRecipeTable implements BaseColumns {

@@ -27,6 +27,9 @@
     <string name="title_activity_create_recipe">Rezept anlegen</string>
     <string name="add_recipeName">Name des Rezepts</string>
     <string name="ingredients_list">Zutatenliste</string>
+    <string name="Einkaufsliste_Headline">Meine Einkaufsliste</string>
+    <string name="SignInTitle">Sign In</string>
+    <string name="buttonLogIn">Log In</string>
 
     <string-array name="recipeType_array">
         <item>Hauptgericht</item>

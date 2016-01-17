@@ -44,7 +44,7 @@
             android:text="@string/button_liste"
             android:id="@+id/buttonEinkaufsliste"
             android:layout_weight="0.10"
-            android:onClick="startSearch"/>
+            android:onClick="startEinkaufsliste"/>
 
         <Button
             android:layout_width="match_parent"
@@ -52,7 +52,7 @@
             android:text="@string/button_impressum"
             android:id="@+id/button_Impressum"
             android:layout_weight="0.10"
-            android:onClick="startSearch"/>
+            android:onClick="startImpressum"/>
 
     </LinearLayout>
 </LinearLayout>

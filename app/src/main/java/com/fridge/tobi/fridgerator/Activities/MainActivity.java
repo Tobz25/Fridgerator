@@ -21,6 +21,7 @@ import java.sql.SQLException;
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.fridge.tobi.fridgerator.MESSAGE";
+
     DBHelper myDbHelper;
 
     @Override
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         fillDatabase();
+
 
     }
 
@@ -58,35 +60,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startSearch (View v) {
-        Intent intent = new Intent();
-        //intent.setClass(this, SearchRecipeActivity.class);
-        intent.putExtra("dbhelperobject", myDbHelper);
+        Intent intent = new Intent(this, SearchRecipeActivity.class);
         startActivity(intent);
+
     }
 
     public void startCreate (View v) {
-        Intent intent = new Intent();
-        intent.setClass(this, CreateRecipeActivity.class);
+        Intent intent = new Intent(this, CreateRecipeActivity.class);
         startActivity(intent);
     }
 
-    public void fillDatabase() {
+    /**
+     * Create the internal database and fill it with data from the file in the assets folder
+     */
+    public void fillDatabase(){
 
         myDbHelper = new DBHelper(this);
 
-        try {
+        try{
             myDbHelper.createDataBase();
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
         }
-
-        try {
-            myDbHelper.openDataBase();
-        } catch (SQLException sqle) {
-            throw new Error("Unable to open database");
+        catch (IOException ioe) {
+            throw new Error ("Unable to create database");
         }
     }
-
 
 
 }

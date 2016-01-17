@@ -9,4 +9,47 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.fridge.tobi.fridgerator.Activities.EinkaufslisteActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Einkaufsliste"
+        android:id="@+id/textView3"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Hinzufügen"
+        android:id="@+id/buttonEinkauf"
+        android:layout_below="@+id/textView3"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="24dp"
+        android:onClick="addToList"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextEinkauf"
+        android:layout_alignTop="@+id/buttonEinkauf"
+        android:layout_alignParentStart="true"
+        android:layout_alignLeft="@id/buttonEinkauf"/>
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/listViewEinkauf"
+        android:layout_below="@+id/buttonEinkauf"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/buttonEinkaufDel" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Einkaufsliste löschen"
+        android:id="@+id/buttonEinkaufDel"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="clearList"/>
 </RelativeLayout>

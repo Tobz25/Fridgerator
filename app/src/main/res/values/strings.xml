@@ -8,7 +8,8 @@
     <string name="button_search">Rezept suchen</string>
     <string name="button_random">Zufallsrezept</string>
     <string name="button_create">Rezept anlegen</string>
-
+    <string name="button_liste">Einkaufsliste</string>
+    <string name="button_impressum">Impressum</string>
 
     <!-- Search Activity Fragment Search -->
     <string name="title_search">Suche</string>
@@ -27,6 +28,9 @@
     <string name="add_recipeName">Name des Rezepts</string>
     <string name="add_ingredientName">Zutat eingeben</string>
     <string name="ingredients_list">Zutatenliste</string>
+    <string name="Einkaufsliste_Headline">Meine Einkaufsliste</string>
+    <string name="SignInTitle">Sign In</string>
+    <string name="buttonLogIn">Log In</string>
     <string name="checkBoxVegetarianText">vegetarisch</string>
     <string name="checkBoxVeganText">vegan</string>
 

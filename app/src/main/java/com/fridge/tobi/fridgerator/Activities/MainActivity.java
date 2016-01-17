@@ -88,5 +88,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void startImpressum (View v) {
+        Intent intent = new Intent();
+        intent.setClass(this, ImpressumActivity.class);
+        startActivity(intent);
+    }
+
+    public void startEinkaufsliste (View v) {
+        Intent intent = new Intent();
+        intent.setClass(this, EinkaufslisteActivity.class);
+        startActivity(intent);
+    }
+
 
 }

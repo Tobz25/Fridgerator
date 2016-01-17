@@ -21,12 +21,17 @@
             android:background="?attr/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
-    <TextView
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/RecipesListView"
+        android:background="#e4e1e1"
+        android:textFilterEnabled="false" />
+
+    <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_found"
-        android:id="@+id/textViewSearch"
-        android:layout_gravity="center_horizontal"
-        android:textSize="@dimen/abc_action_bar_stacked_max_height" />
+        android:id="@+id/scrollView" />
 
 </LinearLayout>

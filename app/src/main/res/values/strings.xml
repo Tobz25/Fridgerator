@@ -42,6 +42,12 @@
         <item>Salat</item>
         <item>Suppe</item>
     </string-array>
+    <string name="title_activity_details">DetailsActivity</string>
+
+
+    <!-- Create Activity details content -->
+    <string name="IngredientsHeadline">Benötigte Zutaten:</string>
+    <string name="ProceedingHeadline">Beschreibung:</string>
 
 
 </resources>

@@ -66,6 +66,10 @@ public class SearchRecipeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Add ingredients to the ingredients list and display them in the IngredientsAddedFragment
+     * @param view
+     */
     public void addIngredient (View view){
         IngredientsAddedFragment ingredient = new IngredientsAddedFragment();
         EditText ingredName = (EditText) findViewById(R.id.zutat);
@@ -91,6 +95,9 @@ public class SearchRecipeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Show message if user trys to insert more dann 5 ingredients
+     */
     private void showMessage(){
         AlertDialog.Builder ingredAlert = new AlertDialog.Builder(this);
         ingredAlert.setMessage(getResources().getString(R.string.errorMessage));

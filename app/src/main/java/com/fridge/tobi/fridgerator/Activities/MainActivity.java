@@ -85,12 +85,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /*
+    * Starts the "ImpressumActivity" activity.
+    * */
     public void startImpressum (View v) {
         Intent intent = new Intent();
         intent.setClass(this, ImpressumActivity.class);
         startActivity(intent);
     }
 
+    /*
+    * Starts the "EinkaufslisteActivity" activity.
+    * */
     public void startEinkaufsliste (View v) {
         Intent intent = new Intent();
         intent.setClass(this, EinkaufslisteActivity.class);

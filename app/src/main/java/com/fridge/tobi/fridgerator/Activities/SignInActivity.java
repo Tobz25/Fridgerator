@@ -9,6 +9,10 @@ import com.fridge.tobi.fridgerator.R;
 
 public class SignInActivity extends AppCompatActivity {
 
+    /*
+    * This method is run when the Activity is created.
+    * Refrences the layout we want to use.
+    * */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -16,6 +20,10 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
     }
 
+    /*
+    * Starts the "MainActivity" activity.
+    * This method is called when we click the "LogIn" Button.
+    * */
     public void startMainActivity (View v){
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class);

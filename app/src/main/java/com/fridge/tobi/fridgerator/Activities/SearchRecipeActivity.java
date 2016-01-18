@@ -26,7 +26,7 @@ public class SearchRecipeActivity extends AppCompatActivity {
     public final static String VEGETARIAN_VALUE = "com.fridge.tobi.fridgerator.VEGETARIAN";
     public final static String VEGAN_VALUE = "com.fridge.tobi.fridgerator.VEGAN";
     private int ingredientCounter = 0;
-    private List<String> ingredientsList = new ArrayList<String>();
+    public static List<String> ingredientsList = new ArrayList<String>();
 
 
     @Override
@@ -66,6 +66,10 @@ public class SearchRecipeActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Add ingredients to the ingredients list and display them in the IngredientsAddedFragment
+     * @param view
+     */
     public void addIngredient (View view){
         IngredientsAddedFragment ingredient = new IngredientsAddedFragment();
         EditText ingredName = (EditText) findViewById(R.id.zutat);
@@ -91,11 +95,13 @@ public class SearchRecipeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Show message if user trys to insert more dann 5 ingredients
+     */
     private void showMessage(){
         AlertDialog.Builder ingredAlert = new AlertDialog.Builder(this);
-        ingredAlert.setMessage("Du kannst nicht mehr als 5 Zutaten angeben!");
-        ingredAlert.setTitle("IngredientMessage");
-        ingredAlert.setPositiveButton("OK", null);
+        ingredAlert.setMessage(getResources().getString(R.string.errorMessage));
+        ingredAlert.setPositiveButton(getResources().getString(R.string.confirmDeleteButton), null);
         ingredAlert.create().show();
 
     }

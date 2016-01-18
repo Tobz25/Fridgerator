@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 
 /**
- * Created by Tobi on 09.01.2016.
+ * A dropdown menu
  */
 public class SpinnerActivity extends Activity implements AdapterView.OnItemSelectedListener {
 

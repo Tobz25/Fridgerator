@@ -11,6 +11,9 @@
     <string name="button_liste">Einkaufsliste</string>
     <string name="button_impressum">Impressum</string>
 
+    <!-- SearchRecipeActivity-->
+    <string name="errorMessage">Du kannst nicht mehr als 2 Zutaten angeben!</string>
+
     <!-- Search Activity Fragment Search -->
     <string name="title_search">Suche</string>
     <string name="add_condiment">Gebe eine Zutat ein</string>
@@ -33,6 +36,7 @@
     <string name="buttonLogIn">Log In</string>
     <string name="checkBoxVegetarianText">vegetarisch</string>
     <string name="checkBoxVeganText">vegan</string>
+    <string name="buttonCreateText">Anlegen</string>
 
 
     <string-array name="recipeType_array">
@@ -42,12 +46,15 @@
         <item>Salat</item>
         <item>Suppe</item>
     </string-array>
-    <string name="title_activity_details">DetailsActivity</string>
+    <string name="title_activity_details">Fridgerator</string>
 
 
     <!-- Create Activity details content -->
     <string name="IngredientsHeadline">Benötigte Zutaten:</string>
     <string name="ProceedingHeadline">Beschreibung:</string>
 
+    <!-- Fragment IngredientsAddedFragment -->
+    <string name="deleteMessage">Eintrag löschen?</string>
+    <string name="confirmDeleteButton">ok</string>
 
 </resources>

@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 
 import com.fridge.tobi.fridgerator.R;
 
-
+/**
+ * Fragment containing the layout for adding ingredient items
+ */
 public class IngredientsListAddFragment extends Fragment {
 
     @Override

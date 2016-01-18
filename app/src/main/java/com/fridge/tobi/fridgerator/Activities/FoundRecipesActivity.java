@@ -25,11 +25,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * loads recipes from the database using the parameters and ingredients selected by the user and displays them in a listView
+ */
 public class FoundRecipesActivity extends AppCompatActivity {
 
+    //DB helper object to perform database operations
     DBHelper myDbHelper;
     TextView tv [];
+    // list which stores the loaded recipes
     public static List<Recipe> loaded;
     public final static String RECIPE_NAME = "com.fridge.tobi.fridgerator.recipeName";
 
@@ -38,22 +42,24 @@ public class FoundRecipesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_found_recipes);
 
-        //LinearLayout layout = (LinearLayout) View.inflate(this, R.layout.content_found_recipes, null);
-        //LinearLayout wrapper = (LinearLayout) findViewById(R.id.found_recipes_container);
         Intent intent = getIntent();
+        //list with ingredients typed in by the user in the SearchRecipeActivity
         List<String> ingredList = intent.getStringArrayListExtra(SearchRecipeActivity.INGRED_LIST);
 
         boolean vegetarian = intent.getBooleanExtra(SearchRecipeActivity.VEGETARIAN_VALUE, false);
         boolean vegan = intent.getBooleanExtra(SearchRecipeActivity.VEGAN_VALUE, false);
 
+        //open connection to the database
         openDB();
+        //load recipes from the database
         loaded = loadRecipes(ingredList, vegetarian, vegan);
 
-
+        //adapter to fill the listview with the loaded recipes
         ListAdapter adapter = new ArrayAdapter<Recipe>(getApplicationContext(), R.layout.custom_textview, loaded);
         final ListView lv = (ListView) findViewById(R.id.RecipesListView);
         lv.setAdapter(adapter);
 
+        //OnClickListener for the ListView Itesm. Starts the DetailsActivity to show the selected recipes' details.
         lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -64,32 +70,6 @@ public class FoundRecipesActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-        /**
-        tv = new TextView[loaded.size()];
-        View.OnClickListener onRecipeClick = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDetails(v, loaded);
-            }
-        };
-
-
-        for(int i =0; i< loaded.size(); ++i){
-            tv[i] = new TextView(this);
-            tv[i].setTextSize(40);
-            tv[i].setText(loaded.get(i).getName());
-            tv[i].setGravity(0);
-            int id = (int)(loaded.get(i).getId());
-            tv[i].setId(id);
-            tv[i].setOnClickListener(onRecipeClick);
-
-                    layout.addView(tv[i]);
-        }**/
-
-      //  setContentView(layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -121,22 +101,5 @@ public class FoundRecipesActivity extends AppCompatActivity {
             throw new Error ("Unable to open database");
         }
     }
-
-    /**
-     * Show the details of a recipe in a new activity (DetailsActivity)
-     * @param rec
-     */
-    public void showDetails(View v, List<Recipe> recipes){
-        for(int i=0; i< tv.length;++i){
-            if(tv[i] == v){
-                Intent intent = new Intent(this, DetailsActivity.class);
-                intent.putExtra(RECIPE_NAME, tv[i].getText());
-              //  intent.(RECIPE_LIST, (ArrayList<Recipe>)recipes);
-                startActivity(intent);
-            }
-        }
-
-    }
-
 
 }

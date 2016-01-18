@@ -19,9 +19,15 @@ import com.fridge.tobi.fridgerator.R;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Activity in which the user can create a new recipe
+ */
 public class CreateRecipeActivity extends AppCompatActivity {
 
-    private List<String> ingredientsList = new ArrayList<String>();
+    /**
+     * Stores the ingredients for the recipe
+     */
+    public static List<String> createRecipeIngredientsList = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +36,9 @@ public class CreateRecipeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /**
+         * Containes the menu type (starter, main,..)
+         */
         loadSpinner();
         IngredientsListAddFragment ingredientsAddFragment = new IngredientsListAddFragment();
         ingredientsAddFragment.setArguments(getIntent().getExtras());
@@ -41,10 +50,12 @@ public class CreateRecipeActivity extends AppCompatActivity {
     }
 
     /**
-     * Spinner is Dropdown menu representing the possible types of the recipe (starter, main, etc)
+     * Spinner is a Dropdown menu representing the possible types of the recipe (starter, main, etc)
      */
     private void loadSpinner(){
         Spinner spinner = (Spinner) findViewById(R.id.recipeTypeSpinner);
+
+        //The adapter provides the choices for the spinner. They are an array loaded the strings.xml file
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
                 R.array.recipeType_array, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -52,20 +63,26 @@ public class CreateRecipeActivity extends AppCompatActivity {
         spinner.setOnItemSelectedListener(new SpinnerActivity());
     }
 
+    /**
+     * Add ingredients for the recipe in a List and starts a fragment to display them
+     * @param view
+     */
     public void IngredientsListAdd(View view){
-
+        //the fragment to display the ingredients; a new fragment is created for each ingredient
         IngredientsAddedFragment ingredient = new IngredientsAddedFragment();
         EditText ingredName = (EditText) findViewById(R.id.ingredientName);
+        //the ingredient name, typed in by the user
         String message = ingredName.getText().toString();
+        //do not add empty Strings
         if(message.isEmpty()|| message == null)
             return;
         else {
-
-                ingredientsList.add(message);
+                //add the ingredient to the ingredients list
+                createRecipeIngredientsList.add(message);
                 Bundle args = new Bundle();
                 args.putString("index", message);
                 ingredient.setArguments(args);
-
+                //add the fragment with the ingredient to a fragment container in the activity
                 getSupportFragmentManager().beginTransaction().add(R.id.ingredientsListContainer, ingredient).commit();
                 ingredName.setText("");
         }

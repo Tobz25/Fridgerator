@@ -1,7 +1,7 @@
 package com.fridge.tobi.fridgerator.Model;
 
 /**
- * Created by Tobi on 13.01.2016.
+ * Represetns an ingredient object
  */
 public class Ingredient {
 

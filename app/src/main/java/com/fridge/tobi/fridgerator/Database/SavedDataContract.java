@@ -3,13 +3,13 @@ package com.fridge.tobi.fridgerator.Database;
 import android.provider.BaseColumns;
 
 /**
- * Created by Tobi on 17.12.2015.
+ * Defines how the database and its tables are constructed
  */
 public class SavedDataContract {
 
     public SavedDataContract(){}
 
-    /* Definition of the table contents */
+    /* Definition of the table ingredients */
     public static abstract class IngredientTable implements BaseColumns {
         public static final String TABLE_NAME = "ingredient";
        // public static final String COLUMN_NAME_INGREDIENT_ID = "ingredientid";
@@ -19,6 +19,7 @@ public class SavedDataContract {
         public static final String COLUMN_NAME_VEAGN ="ingredientvegan";
     }
 
+    //Definition of the recipe table
     public static abstract class RecipeTable implements BaseColumns {
         public static final String TABLE_NAME = "recipe";
       //  public static final String COLUMN_NAME_RECIPE_ID = "recipeid";
@@ -32,7 +33,7 @@ public class SavedDataContract {
         public static final String COLUMN_NAME_INGRED1 = "ingred1";
         public static final String COLUMN_NAME_INGRED2 = "ingred2";
     }
-
+    //Definition of the table connecting recipes and ingredients
     public static abstract class IngredientsInRecipeTable implements BaseColumns {
         public static final String TABLE_NAME = "ingredients_in_recipe";
         public static final String COLUMN_NAME_INGREDIENTID = "ingredient_id";

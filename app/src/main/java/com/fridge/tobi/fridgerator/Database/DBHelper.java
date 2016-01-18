@@ -27,120 +27,15 @@ import java.util.List;
 import android.text.TextUtils;
 
 /**
- * Created by Tobi on 17.12.2015.
+ * Helper Class to perform database operations
  */
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    /**
-    private static final String DATABASE_NAME ="Fridgerator.db";
-    private static final int DATABASE_VERSION = 1;
-    private static final String SQL_CREATE_TABLE_INGREDIENT =
-            "CREATE TABLE" + IngredientTable.TABLE_NAME + " (" +
-            IngredientTable._ID + " INTEGER PRIMARY KEY," +
-            IngredientTable.COLUMN_NAME_NAME + " TEXT" +
-            IngredientTable.COLUMN_NAME_TYP + " TEXT" +
-            IngredientTable.COLUMN_NAME_VEGETARIAN + " INTEGER" +
-            IngredientTable.COLUMN_NAME_VEAGN + " INTEGER" +
-            " )";
-
-    private static String SQL_CREATE_TABLE_RECIPE =
-            "CREATE TABLE" + RecipeTable.TABLE_NAME + " (" +
-            RecipeTable._ID + " INTEGER PRIMARY KEY," +
-            RecipeTable.COLUMN_NAME_NAME + " TEXT" +
-            RecipeTable.COLUMN_NAME_RATING + " INTEGER" +
-            RecipeTable.COLUMN_NAME_AUTHORID + " INTEGER" +
-           // RecipeTable.COLUMN_NAME_COMMENT + " TEXT" +
-            RecipeTable.COLUMN_NAME_PROCEEDING + " TEXT" +
-            " )";
-
-    private static String SQL_CREATE_TABLE_IngredInRecipe=
-            "CREATE TABLE" + IngredientsInRecipeTable.TABLE_NAME + " (" +
-                    IngredientsInRecipeTable._ID + " INTEGER PRIMARY KEY," +
-                    IngredientsInRecipeTable.COLUMN_NAME_INGREDIENTID + " INTEGER" +
-                    IngredientsInRecipeTable.COLUMN_NAME_RECIPEID + " INTEGER" +
-                    IngredientsInRecipeTable.COLUMN_NAME_QUANTITY + " TEXT" +
-                    IngredientsInRecipeTable.COLUMN_NAME_UNIT + " TEXT" +
-                    " )";
-
-    private static final String SQL_DROP_TABLE_INGREDIENT = "DROP TABLE IF EXISTS " + IngredientTable.TABLE_NAME + ";";
-    private static final String SQL_DROP_TABLE_RECIPE = "DROP TABLE IF EXISTS " + RecipeTable.TABLE_NAME + ";";
-    private static final String SQL_DROP_TABLE_INGREDinRECIPE = "DROP TABLE IF EXISTS " + IngredientsInRecipeTable.TABLE_NAME + ";";
-
-    public DBHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-    }
-
-    public void onCreate (SQLiteDatabase db){
-        db.execSQL(SQL_CREATE_TABLE_INGREDIENT);
-        db.execSQL(SQL_CREATE_TABLE_RECIPE);
-        db.execSQL(SQL_CREATE_TABLE_IngredInRecipe);
-    }
-
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
-        db.execSQL(SQL_DROP_TABLE_INGREDIENT);
-        db.execSQL(SQL_DROP_TABLE_RECIPE);
-        db.execSQL(SQL_DROP_TABLE_INGREDinRECIPE);
-        onCreate(db);
-    }
-
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        onUpgrade(db, oldVersion, newVersion);
-    }
-
-    public long insertRecipe(Recipe recipe){
-
-        // Gets the data repository in write mode
-        SQLiteDatabase db = getWritableDatabase();
-
-        // Create a new map of recipe-values, where column names are the keys
-        ContentValues values = new ContentValues();
-        values.put(RecipeTable.COLUMN_NAME_NAME, recipe.getName());
-        values.put(RecipeTable.COLUMN_NAME_RATING, recipe.getRating());
-        values.put(RecipeTable.COLUMN_NAME_AUTHORID, recipe.getAuthorId());
-        values.put(RecipeTable.COLUMN_NAME_PROCEEDING, recipe.getProceeding());
-
-        // Insert the new row, returning the primary key value of the new row
-        long newRowId;
-        newRowId = db.insert(RecipeTable.TABLE_NAME, null, values);
-        return newRowId;
-    }
-
-    public Cursor loadRecipe(long id){
-        SQLiteDatabase db = getReadableDatabase();
-
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                RecipeTable._ID,
-                RecipeTable.COLUMN_NAME_NAME,
-                RecipeTable.COLUMN_NAME_RATING,
-                RecipeTable.COLUMN_NAME_AUTHORID,
-                RecipeTable.COLUMN_NAME_PROCEEDING,
-        };
-
-        String selection = RecipeTable._ID;
-        String []selectionArgs = {Long.toString(id)};
-
-        Cursor c = db.query(
-                RecipeTable.TABLE_NAME,  // The table to query
-                projection,                               // The columns to return
-                selection,                                // The columns for the WHERE clause
-                selectionArgs,                            // The values for the WHERE clause
-                null,                                     // don't group the rows
-                null,                                     // don't filter by row groups
-                null                                      // The sort order
-        );
-        //if(c!= null)
-            return c;
-    }**/
-
-    /**----------------------------------------------------------------------------------------**/
-
+    //patch to the gadgets internal database
     private static String DB_PATH = "/data/data/com.fridge.tobi.fridgerator/databases/";
 
+    //name of the database
     private static String DB_NAME = "ingredients";
 
     private SQLiteDatabase myDataBase;
@@ -152,9 +47,14 @@ public class DBHelper extends SQLiteOpenHelper {
         this.myContext = context;
     }
 
+    /**
+     * Create the internal database and fill it with data from a file which has been created using an XMl Editor
+     * @throws IOException
+     */
     public void createDataBase() throws IOException {
 
 
+        //if Path to internal database does not exist, create it
         File f = new File(DB_PATH);
         if(!f.exists()){
             f.mkdir();
@@ -170,6 +70,7 @@ public class DBHelper extends SQLiteOpenHelper {
             //System.out.print("DB existiert noch nicht");
             this.getReadableDatabase();
             try {
+                //write data from the file into database
                 copyDataBase();
             }
             catch (IOException e) {
@@ -178,7 +79,7 @@ public class DBHelper extends SQLiteOpenHelper {
       //  }
     }
 
-
+/**
     private boolean checkDataBase(){
 
         SQLiteDatabase checkDB = null;
@@ -193,18 +94,25 @@ public class DBHelper extends SQLiteOpenHelper {
         }
 
         return checkDB != null ? true : false;
-    }
+    }**/
 
+    /**
+     * Write information form a file into the database
+     * @throws IOException
+     */
     private void copyDataBase() throws IOException{
 
+        //InputSteam is the file created with the XML Editor. It is stored in the assets folder
         InputStream myInput = myContext.getAssets().open(DB_NAME);
 
+        //outFileName is the gadgets internal database
         String outFileName = DB_PATH + DB_NAME;
 
         OutputStream myOutput = new FileOutputStream(outFileName);
 
         byte[] buffer = new byte[1024];
         int length;
+        //Write data from file into the database
         while ((length = myInput.read(buffer))>0){
             myOutput.write(buffer, 0, length);
         }
@@ -215,6 +123,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
+    /**
+     * open the internal database
+     * @throws SQLException
+     */
     public void openDataBase() throws SQLException{
 
         String myPath = DB_PATH + DB_NAME;
@@ -240,66 +152,10 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    /**
-    public Cursor loadRecipeCursor(long id){
 
-        // Define a projection that specifies which columns from the database
-        // you will actually use after this query.
-        String[] projection = {
-                RecipeTable._ID,
-                RecipeTable.COLUMN_NAME_NAME,
-                RecipeTable.COLUMN_NAME_RATING,
-                RecipeTable.COLUMN_NAME_AUTHORID,
-                RecipeTable.COLUMN_NAME_PROCEEDING,
-        };
-
-        String selection = RecipeTable._ID + "=?";
-        String []selectionArgs = {Long.toString(id)};
-
-        try {
-            Cursor c = myDataBase.query(
-                    RecipeTable.TABLE_NAME,  // The table to query
-                    projection,                               // The columns to return
-                    selection,                                // The columns for the WHERE clause
-                    selectionArgs,                            // The values for the WHERE clause
-                    null,                                     // don't group the rows
-                    null,                                     // don't filter by row groups
-                    null                                      // The sort order
-            );
-            return c;
-        } catch (SQLiteException e){
-            throw new Error("Could not load recipe from DB!");
-        }
-    }
-
-
-    public Recipe loadRecipe(long id){
-
-        Recipe returnRecipe;
-        String recipeName;
-        int recipeRating;
-        int recipeAuthor;
-        String recipeProceeding;
-
-        Cursor recipeCursor  = loadRecipeCursor(id);
-        if (recipeCursor != null){
-            if(recipeCursor.moveToFirst()) {
-                recipeName = recipeCursor.getString(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_NAME));
-                recipeRating = recipeCursor.getInt(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_RATING));
-                recipeAuthor = recipeCursor.getInt(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_AUTHORID));
-                recipeProceeding = recipeCursor.getString(recipeCursor.getColumnIndex(RecipeTable.COLUMN_NAME_PROCEEDING));
-
-            }
-            else return null;
-        }
-        else return null;
-
-        returnRecipe = new Recipe(recipeName, recipeRating, recipeAuthor, recipeProceeding);
-        return returnRecipe;
-    }**/
 
     /**
-     * load the recipes with the given ingredients and vegetarian/vegan values from the DB
+     * Load the recipes with the given ingredients and vegetarian/vegan values from the DB
      * @param ingredients
      * @param vegetarian
      * @param vegan
@@ -329,27 +185,57 @@ public class DBHelper extends SQLiteOpenHelper {
                 RecipeTable.COLUMN_NAME_RATING
         };
 
+        String selection;
+        String []selectionArgs;
 
-        String selection = RecipeTable.COLUMN_NAME_VEGETARIAN + "=? AND" +
-                RecipeTable.COLUMN_NAME_VEGAN + "=?";
+        //if only checkBox vegetarian set, do not use filter vegan
+        if(vegetarian && !vegan){
+            selection = RecipeTable.COLUMN_NAME_VEGETARIAN + "=?";
+            selectionArgs =  new String[1];
+            selectionArgs[0]= "1";
+        }
+
+        //if only checkBox vegan set, do not use filter vegetarian
+        else if(!vegetarian && vegan){
+            selection = RecipeTable.COLUMN_NAME_VEGAN + "=?";
+            selectionArgs =  new String[1];
+            selectionArgs[0]= "1";
+        }
+
+        //if no checkbox is set, do not use filter
+        else if(!vegetarian && !vegan){
+            selection = null;
+            selectionArgs = null;
+
+        }
+        //if both checkboxes are set, use both filter
+        else{
+            selection = RecipeTable.COLUMN_NAME_VEGETARIAN + "=? AND " +
+                    RecipeTable.COLUMN_NAME_VEGAN + "=?";
+            selectionArgs =  new String[2];
+            selectionArgs[0]= "1";
+            selectionArgs[1]= "1";
+        }
 
 
-        String []selectionArgs = {vegetarian ? "1" : "0", vegan ? "1" : "0"};
-
+        //Perform SQL query using the projection and selection arguments
         try {
             Cursor c = myDataBase.query(
-                    RecipeTable.TABLE_NAME,  // The table to query
+                    RecipeTable.TABLE_NAME,             // The table to query
                     null,                               // The columns to return
-                    null,                                // The columns for the WHERE clause
-                    null,                            // The values for the WHERE clause
+                    selection,                                // The columns for the WHERE clause
+                    selectionArgs,                            // The values for the WHERE clause
                     null,                                     // don't group the rows
                     null,                                       // don't filter by row groups
                     null                                      // The sort order
             );
 
+            // does the returned cursor have entrys?
             if(c!=null && c.getCount()>0) {
+                //are there ingredients to filter the recipe rows in the cursor? If yes, check if recipes have the ingredient
                 if (ingredients.size()!=0) {
                     String ingredName = ingredients.get(0);
+                    //iterate over the cursor rows and get the recipe data
                     while (c.moveToNext()) {
                         String recipeIngred1 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED1));
                         String recipeIngred2 = c.getString(c.getColumnIndex(RecipeTable.COLUMN_NAME_INGRED2));
@@ -374,15 +260,18 @@ public class DBHelper extends SQLiteOpenHelper {
                             if(veganValue ==1)
                                 isVegan = true;
 
+                            //create a recipe object and add it to a list
                             returnRecipe = new Recipe(recipeName, recipeRating, recipeAuthor, recipeProceeding, ingred1, ingred2, isVegetarian,isVegan);
                             helperList.add(returnRecipe);
 
                         }
                     }
+                    // there are more ingredients to filter the results
                     if (ingredients.size()>1) {
                         String ingred2Name = ingredients.get(1);
                         for(Recipe rec : helperList)
                         {
+                            //check if loaded recipes have the necessary ingredient
                             if(ingred2Name.toUpperCase().equals(rec.getIngred1().toUpperCase())||ingred2Name.toUpperCase().equals(rec.getIngred2().toUpperCase()))
                                 results.add(rec);
                         }
@@ -393,10 +282,12 @@ public class DBHelper extends SQLiteOpenHelper {
                             results.add(rec);
                         }
                     }
+                    // If no ingredients to filter, load all recipes
                 } else {
                     addRecipe(c, results);
                 }
             }
+            //return list with loaded recipes
             return results;
 
         } catch (SQLiteException e){
@@ -404,6 +295,11 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+    /**
+     * gets recipes from a Cursor row and adds them to a list
+     * @param c
+     * @param recipeList
+     */
     public void addRecipe(Cursor c, List<Recipe> recipeList) {
 
         Recipe returnRecipe;

@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.SQLException;
 
+/**
+ * Main menu
+ */
 public class MainActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.fridge.tobi.fridgerator.MESSAGE";
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        //fill the internal database with data stored in a file
         fillDatabase();
 
 
@@ -59,12 +63,20 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Start the SearchRecipeActivity to search recipes in the database
+     * @param v
+     */
     public void startSearch (View v) {
         Intent intent = new Intent(this, SearchRecipeActivity.class);
         startActivity(intent);
 
     }
 
+    /**
+     * Start the CreateRecipeActivity to create a new recipe and add it to the database
+     * @param v
+     */
     public void startCreate (View v) {
         Intent intent = new Intent(this, CreateRecipeActivity.class);
         startActivity(intent);
@@ -85,12 +97,18 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Start the EinkaufslisteActivity to create a shipping list
+     */
     public void startImpressum (View v) {
         Intent intent = new Intent();
         intent.setClass(this, ImpressumActivity.class);
         startActivity(intent);
     }
 
+    /**
+     * Create the ImpressumActivity to show the impressum
+     */
     public void startEinkaufsliste (View v) {
         Intent intent = new Intent();
         intent.setClass(this, EinkaufslisteActivity.class);
